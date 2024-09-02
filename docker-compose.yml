@@ -8,7 +8,7 @@ services:
       MYSQL_DATABASE : bikes
       MYSQL_ROOT_PASSWORD : root
     volumes:
-      - ./app:/var/lib/mysql
+      - /mysql_data:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost","-uroot","-proot" ]
       interval: 10s
@@ -30,8 +30,8 @@ services:
       - DBNAME=bikes
       - DB_USER=root
       - DB_PASSWORD=root
-      - DB_HOST =mysql
-      - DB_PORT =3306
+      - DB_HOST=mysql
+      - DB_PORT=3306
     depends_on:
       mysql:
         condition: service_healthy
