@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bikes-app
+  labels:
+    app: bikes-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bikes-app
+  template:
+    metadata:
+      labels:
+        app: bikes-app
+    spec:
+      containers:
+      - name: bikes-app
+        image: jarvis0100/bikes:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DBNAME
+          value: "bikes"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: "root"
+        - name: DB_HOST
+          value: "mysql"
+        - name: DB_PORT
+          value: "3306"
+        - name: DJANGO_SUPERUSER_USERNAME
+          value: "admin"
+        - name: DJANGO_SUPERUSER_EMAIL
+          value: "akshaybb.1025@gmail.com"
+        - name: DJANGO_SUPERUSER_PASSWORD
+          value: "admin"
+        command: ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+
